@@ -1547,12 +1547,22 @@ function install_pysnaffler(){
     add-to-list "pysnaffler,https://github.com/skelsec/pysnaffler,Snaffler. But in python."
 }
 
+function install_hekatomb() {
+    # CODE-CHECK-WHITELIST=add-aliases
+    colorecho "Installing hekatomb"
+    pipx install --system-site-packages git+https://github.com/ProcessusT/HEKATOMB
+    add-history "hekatomb"
+    add-test-command "hekatomb -h"
+    add-to-list "hekatomb,https://github.com/ProcessusT/HEKATOMB,Hekatomb is a python script that connects to LDAP directory to retrieve all computers and users informations.Then it will download all DPAPI blob of all users from all computers."
+}
+
 # Package dedicated to internal Active Directory tools
 function package_ad() {
     set_env
     local start_time
     local end_time
     start_time=$(date +%s)
+                   
     install_ad_apt_tools
     install_asrepcatcher            # Active Directory ASREP roasting tool that catches ASREP for users in the same VLAN whether they require pre-authentication or not
     install_pretender
@@ -1660,6 +1670,7 @@ function package_ad() {
     install_godap                  # A complete terminal user interface (TUI) for LDAP
     install_powerview              # Powerview Python implementation 
     install_pysnaffler             # Snaffler, but in Python
+    install_hekatomb               # Hekatomb is a python script that connects to LDAP directory to retrieve all computers and users informations.Then it will download all DPAPI blob of all users from all computers.
     post_install
     end_time=$(date +%s)
     local elapsed_time=$((end_time - start_time))
